@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(
-    name="streamlit-time-entry",
+    name="st-time-entry",
     version="0.0.1",
     author="",
     author_email="",
