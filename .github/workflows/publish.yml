@@ -30,6 +30,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install build twine
 
+      - name: Check if version exists on PyPI
+        run: |
+          PACKAGE_NAME="st_time_entry"
+          PACKAGE_VERSION=$(python setup.py --version)
+          if curl -s https://pypi.org/pypi/$PACKAGE_NAME/$PACKAGE_VERSION/json; then
+            echo "Version $PACKAGE_VERSION already exists on PyPI. Skipping upload."
+            exit 1
+          fi
+
       - name: Build package
         run: python -m build
 
