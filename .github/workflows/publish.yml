@@ -31,18 +31,21 @@ jobs:
           pip install build twine
 
       - name: Check if version exists on PyPI
+        id: check-version
         run: |
           PACKAGE_NAME="st_time_entry"
           PACKAGE_VERSION=$(python setup.py --version)
           if curl -s https://pypi.org/pypi/$PACKAGE_NAME/$PACKAGE_VERSION/json; then
-            echo "Version $PACKAGE_VERSION already exists on PyPI. Skipping upload."
-            exit 1
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Build package
         run: python -m build
 
       - name: Publish to PyPI
+        if: steps.check-version.outputs.exists == 'false'
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
