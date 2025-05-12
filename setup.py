@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="st-time-entry",
-    version="0.5.0",
+    version="0.6.0",
     author="",
     author_email="",
     description="",
